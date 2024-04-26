@@ -1,0 +1,390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Services365Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Estado">
+    <Key>
+      <PropertyRef Name="IdEstado" />
+    </Key>
+    <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tiquetes" Relationship="Self.FK_Tiquete_Estado" FromRole="Estado" ToRole="Tiquete" />
+  </EntityType>
+  <EntityType Name="Faq">
+    <Key>
+      <PropertyRef Name="IdFaq" />
+    </Key>
+    <Property Name="IdFaq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Solucion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tiquetes" Relationship="Self.FK_Tiquete_Faq" FromRole="Faq" ToRole="Tiquete" />
+  </EntityType>
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="IdInventario" />
+    </Key>
+    <Property Name="IdInventario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipoEquipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Serie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VersionInv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tiquetes" Relationship="Self.FK_Tiquete_Inventario" FromRole="Inventario" ToRole="Tiquete" />
+  </EntityType>
+  <EntityType Name="Mensaje">
+    <Key>
+      <PropertyRef Name="IdMensaje" />
+    </Key>
+    <Property Name="IdMensaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mensaje1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MensjFecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdTiquete" Type="Int32" Nullable="false" />
+    <Property Name="IdUsuario" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Servicio">
+    <Key>
+      <PropertyRef Name="IdServicio" />
+    </Key>
+    <Property Name="IdServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipoServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tiempo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tiquetes" Relationship="Self.FK_Tiquete_Servicio" FromRole="Servicio" ToRole="Tiquete" />
+  </EntityType>
+  <EntityType Name="Tiquete">
+    <Key>
+      <PropertyRef Name="IdTiquete" />
+    </Key>
+    <Property Name="IdTiquete" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaFinal" Type="DateTime" Precision="3" />
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+    <Property Name="IdTecnico" Type="Int32" />
+    <Property Name="IdEstado" Type="Int32" Nullable="false" />
+    <Property Name="IdServicio" Type="Int32" />
+    <Property Name="IdFaq" Type="Int32" />
+    <Property Name="IdInventario" Type="Int32" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK_Tiquete_Estado" FromRole="Tiquete" ToRole="Estado" />
+    <NavigationProperty Name="Faq" Relationship="Self.FK_Tiquete_Faq" FromRole="Tiquete" ToRole="Faq" />
+    <NavigationProperty Name="Inventario" Relationship="Self.FK_Tiquete_Inventario" FromRole="Tiquete" ToRole="Inventario" />
+    <NavigationProperty Name="Servicio" Relationship="Self.FK_Tiquete_Servicio" FromRole="Tiquete" ToRole="Servicio" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Tiquete_Usuario" FromRole="Tiquete" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contrasenna" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdRol" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+    <NavigationProperty Name="Tiquetes" Relationship="Self.FK_Tiquete_Usuario" FromRole="Usuario" ToRole="Tiquete" />
+  </EntityType>
+  <Association Name="FK_Tiquete_Estado">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="Tiquete" Type="Self.Tiquete" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="IdEstado" />
+      </Principal>
+      <Dependent Role="Tiquete">
+        <PropertyRef Name="IdEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tiquete_Faq">
+    <End Role="Faq" Type="Self.Faq" Multiplicity="0..1" />
+    <End Role="Tiquete" Type="Self.Tiquete" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faq">
+        <PropertyRef Name="IdFaq" />
+      </Principal>
+      <Dependent Role="Tiquete">
+        <PropertyRef Name="IdFaq" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tiquete_Inventario">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
+    <End Role="Tiquete" Type="Self.Tiquete" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="IdInventario" />
+      </Principal>
+      <Dependent Role="Tiquete">
+        <PropertyRef Name="IdInventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tiquete_Servicio">
+    <End Role="Servicio" Type="Self.Servicio" Multiplicity="0..1" />
+    <End Role="Tiquete" Type="Self.Tiquete" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servicio">
+        <PropertyRef Name="IdServicio" />
+      </Principal>
+      <Dependent Role="Tiquete">
+        <PropertyRef Name="IdServicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tiquete_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Tiquete" Type="Self.Tiquete" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Tiquete">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Services365Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Estadoes" EntityType="Self.Estado" />
+    <EntitySet Name="Faqs" EntityType="Self.Faq" />
+    <EntitySet Name="Inventarios" EntityType="Self.Inventario" />
+    <EntitySet Name="Mensajes" EntityType="Self.Mensaje" />
+    <EntitySet Name="Rols" EntityType="Self.Rol" />
+    <EntitySet Name="Servicios" EntityType="Self.Servicio" />
+    <EntitySet Name="Tiquetes" EntityType="Self.Tiquete" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Tiquete_Estado" Association="Self.FK_Tiquete_Estado">
+      <End Role="Estado" EntitySet="Estadoes" />
+      <End Role="Tiquete" EntitySet="Tiquetes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tiquete_Faq" Association="Self.FK_Tiquete_Faq">
+      <End Role="Faq" EntitySet="Faqs" />
+      <End Role="Tiquete" EntitySet="Tiquetes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tiquete_Inventario" Association="Self.FK_Tiquete_Inventario">
+      <End Role="Inventario" EntitySet="Inventarios" />
+      <End Role="Tiquete" EntitySet="Tiquetes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rols" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tiquete_Servicio" Association="Self.FK_Tiquete_Servicio">
+      <End Role="Servicio" EntitySet="Servicios" />
+      <End Role="Tiquete" EntitySet="Tiquetes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tiquete_Usuario" Association="Self.FK_Tiquete_Usuario">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Tiquete" EntitySet="Tiquetes" />
+    </AssociationSet>
+    <FunctionImport Name="ActualizarInventario">
+      <Parameter Name="IdInventario" Mode="In" Type="Int32" />
+      <Parameter Name="TipoEquipo" Mode="In" Type="String" />
+      <Parameter Name="Marca" Mode="In" Type="String" />
+      <Parameter Name="Modelo" Mode="In" Type="String" />
+      <Parameter Name="Serie" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="VersionInv" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="BuscarTiquete" ReturnType="Collection(Services365Model.BuscarTiquete_Result)">
+      <Parameter Name="IdTiquete" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CambiarContrasena">
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="Contrasena" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ConsultarFaq" ReturnType="Collection(Services365Model.ConsultarFaq_Result)">
+      <Parameter Name="Titulo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ConsultarInventario" ReturnType="Collection(Services365Model.ConsultarInventario_Result)">
+      <Parameter Name="IdInventario" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ConsultarServicio" ReturnType="Collection(Services365Model.ConsultarServicio_Result)">
+      <Parameter Name="idServicio" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ConsultarTodoEstado" ReturnType="Collection(Services365Model.ConsultarTodoEstado_Result)" />
+    <FunctionImport Name="ConsultarTodoFaqs" ReturnType="Collection(Services365Model.ConsultarTodoFaqs_Result)" />
+    <FunctionImport Name="ConsultarTodoInventario" ReturnType="Collection(Services365Model.ConsultarTodoInventario_Result)" />
+    <FunctionImport Name="ConsultarTodoServicios" ReturnType="Collection(Services365Model.ConsultarTodoServicios_Result)" />
+    <FunctionImport Name="ConsultarUsuarios" ReturnType="Collection(Services365Model.ConsultarUsuarios_Result)" />
+    <FunctionImport Name="CrearInventario">
+      <Parameter Name="TipoEquipo" Mode="In" Type="String" />
+      <Parameter Name="Marca" Mode="In" Type="String" />
+      <Parameter Name="Modelo" Mode="In" Type="String" />
+      <Parameter Name="Serie" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="VersionInv" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CrearTiquete">
+      <Parameter Name="Titulo" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="FechaFinal" Mode="In" Type="DateTime" />
+      <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+      <Parameter Name="IdTecnico" Mode="In" Type="Int32" />
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+      <Parameter Name="IdServicio" Mode="In" Type="Int32" />
+      <Parameter Name="IdFaq" Mode="In" Type="Int32" />
+      <Parameter Name="IdInvetario" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EditarTiquete">
+      <Parameter Name="IdTiquete" Mode="In" Type="Int32" />
+      <Parameter Name="IdTecnico" Mode="In" Type="Int32" />
+      <Parameter Name="IdEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EliminarTiquete">
+      <Parameter Name="IdTiquete" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="IniciarSesion" ReturnType="Collection(Services365Model.IniciarSesion_Result)">
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="Contrasenna" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertarMensaje">
+      <Parameter Name="Mensaje" Mode="In" Type="String" />
+      <Parameter Name="IdTiquete" Mode="In" Type="Int32" />
+      <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ListarTiquetes" ReturnType="Collection(Services365Model.ListarTiquetes_Result)" />
+    <FunctionImport Name="RegistrarUsuario">
+      <Parameter Name="Alias" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido1" Mode="In" Type="String" />
+      <Parameter Name="Apellido2" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="Contrasenna" Mode="In" Type="String" />
+      <Parameter Name="IdRol" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="VerMensaje" ReturnType="Collection(Services365Model.VerMensaje_Result)">
+      <Parameter Name="IdTiquete" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="BuscarTiquete_Result">
+    <Property Type="Int32" Name="IdTiquete" Nullable="false" />
+    <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+    <Property Type="DateTime" Name="FechaFinal" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+    <Property Type="Int32" Name="IdTecnico" Nullable="true" />
+    <Property Type="Int32" Name="IdEstado" Nullable="false" />
+    <Property Type="Int32" Name="IdServicio" Nullable="true" />
+    <Property Type="Int32" Name="IdFaq" Nullable="true" />
+    <Property Type="Int32" Name="IdInventario" Nullable="true" />
+    <Property Type="String" Name="status" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Tiempo" Nullable="true" />
+    <Property Type="String" Name="TipoServicio" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="faq" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Usuario" Nullable="true" MaxLength="152" />
+  </ComplexType>
+  <ComplexType Name="ConsultarFaq_Result">
+    <Property Type="Int32" Name="IdFaq" Nullable="false" />
+    <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Solucion" Nullable="false" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="ConsultarInventario_Result">
+    <Property Type="Int32" Name="IdInventario" Nullable="false" />
+    <Property Type="String" Name="TipoEquipo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Modelo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Serie" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="VersionInv" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="ConsultarServicio_Result">
+    <Property Type="Int32" Name="IdServicio" Nullable="false" />
+    <Property Type="String" Name="TipoServicio" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Tiempo" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ConsultarTodoEstado_Result">
+    <Property Type="Int32" Name="IdEstado" Nullable="false" />
+    <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="ConsultarTodoFaqs_Result">
+    <Property Type="Int32" Name="IdFaq" Nullable="false" />
+    <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Solucion" Nullable="false" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="ConsultarTodoInventario_Result">
+    <Property Type="Int32" Name="IdInventario" Nullable="false" />
+    <Property Type="String" Name="TipoEquipo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Modelo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Serie" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="VersionInv" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="ConsultarTodoServicios_Result">
+    <Property Type="Int32" Name="IdServicio" Nullable="false" />
+    <Property Type="String" Name="TipoServicio" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Tiempo" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ConsultarUsuarios_Result">
+    <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NombreRol" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="IdRol" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="IniciarSesion_Result">
+    <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+    <Property Type="String" Name="Alias" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="IdRol" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ListarTiquetes_Result">
+    <Property Type="Int32" Name="IdTiquete" Nullable="false" />
+    <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+    <Property Type="DateTime" Name="FechaFinal" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+    <Property Type="Int32" Name="IdTecnico" Nullable="true" />
+    <Property Type="Int32" Name="IdEstado" Nullable="false" />
+    <Property Type="Int32" Name="IdServicio" Nullable="true" />
+    <Property Type="Int32" Name="IdFaq" Nullable="true" />
+    <Property Type="Int32" Name="IdInventario" Nullable="true" />
+    <Property Type="String" Name="status" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Tiempo" Nullable="true" />
+    <Property Type="String" Name="TipoServicio" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="faq" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="VerMensaje_Result">
+    <Property Type="Int32" Name="IdMensaje" Nullable="false" />
+    <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="500" />
+    <Property Type="DateTime" Name="MensjFecha" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="IdTiquete" Nullable="false" />
+    <Property Type="Int32" Name="IdUsuario" Nullable="true" />
+    <Property Type="String" Name="Usuario" Nullable="true" MaxLength="152" />
+  </ComplexType>
+</Schema>

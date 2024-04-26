@@ -1,0 +1,72 @@
+﻿@model KN_WEB.Entities.TiqueteEnt
+
+@{
+    ViewBag.Title = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Crear tiquete</h6>
+        </div>
+        @using (Html.BeginForm("AddTicket", "Ticket", FormMethod.Post, new { @id = "sendform" }))
+        {
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="Titulo" class="form-label">Título</label>
+                    @Html.TextBoxFor(m => m.Titulo, new { @id = "Titulo", @type = "text", @class = "form-control", @required = true })
+                </div>
+                <div class="col">
+                    <label for="servicio" class="form-label">Servicio</label>
+                    @Html.DropDownListFor(x => x.IdServicio, new SelectList(ViewBag.servicios, "idServicio", "TipoServicio"), new { @id = "servicio", @class = "form-select" })
+                </div>
+                <div class="col">
+                    <label for="faq" class="form-label">FAQ</label>
+                    @Html.DropDownListFor(x => x.IdFaq, new SelectList(ViewBag.faq, "IdFaq", "Titulo"), new { @id = "faq", @class = "form-select" })
+                </div>
+            </div>
+
+            @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", @id = "descripcion"})
+
+            <button type="submit" class="btn btn-primary mt-3">
+                Generar solicitud <i class="fa fa-plus"></i>
+            </button>
+        }
+    </div>
+
+</div>
+
+<script>
+    tinymce.init({
+        selector: '#descripcion',
+        menubar: 'file edit',
+        skin: "oxide-dark",
+        content_css: "dark",
+        resize: false
+    });
+
+</script>
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}

@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Listado de tickets</h6>
+            <a class="btn btn-primary" href=@Url.Action("Crear", "Ticket")>
+                Nuevo tiquete <i class="fa fa-plus"></i>
+            </a>
+        </div>
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">
+                    Abiertos
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab"
+                        aria-controls="pills-profile" aria-selected="false">
+                    Cerrados
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="table-responsive">
+                    <table id="tableOpen" class="table table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>TicketID</th>
+                                <th>Titulo</th>
+                                <th>Fecha de cracion</th>
+                                <th>Estado del servicio</th>
+                                <th>Tiempo estimado</th>
+                                <th>Ver detalles</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="table-responsive">
+                    <table id="tableClosed" class="table table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>TicketID</th>
+                                <th>Titulo</th>
+                                <th>Fecha de cracion</th>
+                                <th>Fecha de cierre</th>
+                                <th>Ver detalles</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/WebStyles/js/datatables/jquery.dataTables.min.js"></script>
+<script src="~/WebStyles/js/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/WebStyles/js/datatables/dataTables.buttons.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.bootstrap4.min.js"></script>
+<script src="~/WebStyles/js/datatables/jszip.min.js"></script>
+<script src="~/WebStyles/js/datatables/pdfmake.min.js"></script>
+<script src="~/WebStyles/js/datatables/vfs_fonts.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.html5.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.print.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.colVis.min.js"></script>
+<script src="~/WebStyles/js/Tiquetes/listOpen.js"></script>
+<script src="~/WebStyles/js/Tiquetes/listClosed.js"></script>
+
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}
+

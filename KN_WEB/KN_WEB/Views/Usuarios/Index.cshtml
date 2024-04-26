@@ -1,0 +1,98 @@
+﻿@model KN_WEB.Entities.UsuarioEnt
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Mantenimiento de servicios</h6>
+                @using (Html.BeginForm("InsertUser", "Usuarios", FormMethod.Post, new { @id = "sendform" }))
+                {
+                    @Html.TextBoxFor(m => m.IdUsuario, new { @id = "IdUsuario", @type = "text", @class = "form-control", @hidden = true })
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="marca" class="form-label">Nombre</label>
+                            @Html.TextBoxFor(m => m.Nombre, new { @id = "Nombre", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="modelo" class="form-label">Apellido 1</label>
+                            @Html.TextBoxFor(m => m.Apellido1, new { @id = "Apellido1", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="marca" class="form-label">Apellido 2</label>
+                            @Html.TextBoxFor(m => m.Apellido2, new { @id = "Apellido2", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                        <div class="col mb-3">
+                            <label for="modelo" class="form-label">Correo</label>
+                            @Html.TextBoxFor(m => m.Correo, new { @id = "Correo", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                        <div class="col mmb-3">
+                            <label for="rol" class="form-label">Rol</label>
+                            @Html.DropDownListFor(x => x.IdRol, new SelectList(ViewBag.roles, "idRol", "NombreRol"), new { @id = "idRol", @class = "form-select" })
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
+                }
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Listado de dispositivos</h6>
+                <div class="table-responsive">
+
+                    <table id="usuariosTable" class="table table-hover text-center" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido 1</th>
+                                <th>Apellido 2</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/WebStyles/js/datatables/jquery.dataTables.min.js"></script>
+<script src="~/WebStyles/js/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/WebStyles/js/datatables/dataTables.buttons.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.bootstrap4.min.js"></script>
+<script src="~/WebStyles/js/datatables/jszip.min.js"></script>
+<script src="~/WebStyles/js/datatables/pdfmake.min.js"></script>
+<script src="~/WebStyles/js/datatables/vfs_fonts.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.html5.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.print.min.js"></script>
+<script src="~/WebStyles/js/datatables/buttons.colVis.min.js"></script>
+<script src="~/WebStyles/js/Usuarios/list.js"></script>
+
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}

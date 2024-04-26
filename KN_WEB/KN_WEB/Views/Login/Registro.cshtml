@@ -1,0 +1,72 @@
+﻿@model KN_WEB.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "Registro";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            @using (Html.BeginForm("SingOn", "Login", FormMethod.Post))
+            {
+                <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="@Url.Action("Index", "Login")" class="">
+                            <h3 class="text-primary">Servicec365</h3>
+                        </a>
+                        <h3>Registrar</h3>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Alias, new { @type = "text", @placeholder = "jhondoe", @class = "form-control", @id = "UserName" })
+                        <label for="UserName">Usuario</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Correo, new { @type = "email", @placeholder = "name@example.com", @class = "form-control", @id = "Email" })
+                        <label for="Email">Correo</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Nombre, new { @type = "text", @placeholder = "John", @class = "form-control", @id = "Name" })
+                        <label for="Name">Nombre</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Apellido1, new { @type = "text", @placeholder = "Hondo", @class = "form-control", @id = "PrimerApellido" })
+                        <label for="PrimerApellido">Apellido1</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Apellido2, new { @type = "text", @placeholder = "Hondo", @class = "form-control", @id = "SegundoApellido" })
+                        <label for="SegundoApellido">Apellido2</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @placeholder = "password", @class = "form-control", @id = "Password" })
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Registrar</button>
+                    <p class="text-center mb-0">Ya tienes una cuenta? <a href=@Url.Action("Index","Home")>Inicia sesion</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}

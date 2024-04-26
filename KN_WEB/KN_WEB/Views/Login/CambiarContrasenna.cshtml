@@ -1,0 +1,60 @@
+﻿@model KN_WEB.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "CambiarContrasenna";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            @using (Html.BeginForm("ChangePassword", "Login", FormMethod.Post, new { @id = "sendform" }))
+            {
+                <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="@Url.Action("Index", "Login")" class="">
+                            <h3 class="text-primary">Service365</h3>
+                        </a>
+                        <h3>Credenciales</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Correo, new { @type = "text", @class = "form-control", @id = "email", @required = true, @hidden = true })
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @class = "form-control", @id = "firstPassword", @required = true })
+                        <label for="firstPassword">Nueva contraseña</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(m => m.Contrasenna, new { @type = "password", @class = "form-control", @id = "secondPassword", @required = true })
+                        <label for="secondPassword">Confirmar contraseña</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Recuperar contraseña</button>
+                    <p class="text-center mb-0">Ya tienes una cuenta? <a href=@Url.Action("Index","Login")>Inicia sesion</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/WebStyles/js/Login/recuperarContrasena.js"></script>
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Services365Model1StoreContainer" CdmEntityContainer="Services365Entities1">
+    <EntitySetMapping Name="Faq">
+      <EntityTypeMapping TypeName="Services365Model1.Faq">
+        <MappingFragment StoreEntitySet="Faq">
+          <ScalarProperty Name="IdFaq" ColumnName="IdFaq" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Solucion" ColumnName="Solucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

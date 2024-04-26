@@ -1,0 +1,84 @@
+﻿@model KN_WEB.Entities.FaqEnt
+@{
+    ViewBag.Title = "Faq";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Mantenimiento de inventarios</h6>
+                @using (Html.BeginForm("InsertFaqq", "Faqq", FormMethod.Post, new { @id = "sendform" }))
+                {
+                    @Html.TextBoxFor(m => m.IdFaq, new { @id = "idFaqq", @type = "text", @class = "form-control", @hidden = true })
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        @Html.TextBoxFor(m => m.Titulo, new { @id = "titulo", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div class="mb-3">
+                        <label for="solucion" class="form-label">Solución</label>
+                        @Html.TextBoxFor(m => m.Solucion, new { @id = "solucion", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div class="mb-3">
+                        <label for="Descripción" class="form-label">Descripción</label>
+                        @Html.TextBoxFor(m => m.Descripcion, new { @id = "descripcion", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div id="validation-summary-errors" class="alert alert-danger" style="display:none;"></div>
+                    <button type="submit" class="btn btn-primary">Agregar o modificar</button>
+                }
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Listado de Faq</h6>
+                <div class="table-responsive">
+                    <table id="FaqqTable" class="table table-hover text-center" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Titulo</th>
+                                <th>Descripcion</th>
+                                <th>Solucion</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="~/WebStyles/js/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/WebStyles/js/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/WebStyles/js/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/WebStyles/js/datatables/jszip.min.js"></script>
+    <script src="~/WebStyles/js/datatables/pdfmake.min.js"></script>
+    <script src="~/WebStyles/js/datatables/vfs_fonts.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.html5.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.print.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.colVis.min.js"></script>
+    <script src="~/WebStyles/js/Faq/list.js"></script>
+
+    @if (TempData["ErrorMesagge"] != null)
+    {
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+        </script>
+    }
+
+    @if (TempData["SuccessMesagge"] != null)
+    {
+        <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+        </script>
+    }

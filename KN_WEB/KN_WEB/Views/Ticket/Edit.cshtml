@@ -1,0 +1,186 @@
+﻿@model KN_WEB.ViewClass.TiqueteEditView
+
+@using Newtonsoft.Json;
+@using KN_WEB.Entities; 
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Información de tiquete: </h6>
+        </div>
+
+        @using (Html.BeginForm("ModificarTicket", "Ticket", FormMethod.Post, new { @id = "sendform" }))
+        {
+            @Html.TextBoxFor(m => m.IdTiquete, new { @class = "form-control", @type = "text", @id = "txtTiquete", @hidden = true })
+            @Html.TextBoxFor(m => m.IdUsuario, new { @class = "form-control", @type = "text", @id = "txtUsuario", @hidden = true })
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="txtTitulo">Título</label>
+                        @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control", @type = "text", @readonly = true, @id = "txtTitulo" })
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="txtServicio">Servicio</label>
+                        @Html.TextBoxFor(m => m.TipoServicio, new { @class = "form-control", @type = "text", @readonly = true, @id = "txtServicio" })
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="txtFaq">Faq</label>
+                        @Html.TextBoxFor(m => m.Faq, new { @class = "form-control", @type = "text", @readonly = true, @id = "txtFaq" })
+                    </div>
+                </div>
+                @{
+                    var userInfo = JsonConvert.DeserializeObject<UsuarioEnt>(Session["userInfo"].ToString());
+                    if (userInfo.IdRol.ToString() == "1")
+                    {
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label" for="txtUsuario">Técnico asignado</label>
+                                @Html.DropDownListFor(x => x.IdTecnico, new SelectList(ViewBag.tecnico, "idUsuario", "Nombre"), new { @id = "tecnico", @class = "form-select" })
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="txtUsuario">Estado del tiquete</label>
+                                @Html.DropDownListFor(x => x.IdEstado, new SelectList(ViewBag.estado, "idEstado", "status"), new { @id = "estado", @class = "form-select" })
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary" id="btnActualizar">
+                                    Actualizar tiquete <i class="fa fa-pencil-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                    if (userInfo.IdRol.ToString() == "3")
+                    {
+                        <div class="row mt-3">
+                            <div class="col" style="display:none; visibility:hidden">
+                                <label class="form-label" for="txtUsuario">Técnico asignado</label>
+                                @Html.DropDownListFor(x => x.IdTecnico, new SelectList(ViewBag.tecnico, "idUsuario", "Nombre"), new { @id = "tecnico", @class = "form-select" })
+                            </div>
+                            <div class="col col-lg-6 col-sm-12">
+                                <label class="form-label" for="txtUsuario">Estado del tiquete</label>
+                                @Html.DropDownListFor(x => x.IdEstado, new SelectList(ViewBag.estado, "idEstado", "status"), new { @id = "estado", @class = "form-select" })
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">
+                                    Actualizar tiquete <i class="fa fa-pencil-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <br />
+
+            <h6 class="text-center text-white mt-3">Historial de mensajes</h6>
+
+            <div class="container">
+                <button type="button" class="btn btn-primary" onclick="$('#mensajeModal').modal('show')">
+                    Nuevo Mensaje <i class="fa fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="container">
+                <div class="d-flex align-items-center border-bottom py-3">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 justify-content-between mb-3">
+                            <h6 class="mb-0">@Model.Usuario</h6>
+                            <small>Fecha de mensaje: @Model.FechaInicio</small>
+                        </div>
+                        <span>
+                            @(new HtmlString(Model.Descripcion)) 
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-section mt-3">
+                @if (Model.mensajes != null)
+                {
+                    foreach (var item in Model.mensajes)
+                    {
+                        <div class="container">
+                            <div class="d-flex align-items-center border-bottom py-3">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 justify-content-between mb-3">
+                                        <h6 class="mb-0">@item.Usuario</h6>
+                                        <small>Fecha de mensaje: @item.MensjFecha</small>
+                                    </div>
+                                    <span>
+                                        @item.Mensaje
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="mensajeModalLabel">Nuevo mensaje</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="descripcion" class="tinymce">
+
+                </textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="addMessage" class="btn btn-primary">Agregar mensaje</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    tinymce.init({
+        selector: '#descripcion',
+        menubar: 'file edit',
+        skin: "oxide-dark",
+        content_css: "dark",
+        resize: false
+    });
+
+</script>
+<script src="~/WebStyles/js/Tiquetes/action.js"></script>
+@if (TempData["ErrorMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+    </script>
+}
+
+@if (TempData["SuccessMesagge"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+    </script>
+}

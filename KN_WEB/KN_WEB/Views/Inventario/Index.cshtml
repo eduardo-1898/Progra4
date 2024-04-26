@@ -1,0 +1,100 @@
+﻿@model KN_WEB.Entities.InventarioEnt
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Mantenimiento de inventarios</h6>
+                @using (Html.BeginForm("InsertInventory", "Inventario", FormMethod.Post, new { @id = "sendform" }))
+                {
+                    @Html.TextBoxFor(m => m.IdInventario, new { @id = "idInventario", @type = "text", @class = "form-control", @hidden = true })
+                    <div class="mb-3">
+                        <label for="TipoEquipo" class="form-label">Tipo de equipo</label>
+                        @Html.TextBoxFor(m => m.TipoEquipo, new { @id = "TipoEquipo", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="marca" class="form-label">Marca</label>
+                            @Html.TextBoxFor(m => m.Marca, new { @id = "marca", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="modelo" class="form-label">Modelo</label>
+                            @Html.TextBoxFor(m => m.Modelo, new { @id = "modelo", @type = "text", @class = "form-control", @required = true })
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="serie" class="form-label">Serie</label>
+                        @Html.TextBoxFor(m => m.Serie, new { @id = "serie", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        @Html.TextBoxFor(m => m.Nombre, new { @id = "nombre", @type = "text", @class = "form-control", @required = true })
+                    </div>
+                    <div class="col-3 col-xs-12 mb-3">
+                        <label for="version" class="form-label">Versión</label>
+                        @Html.TextBoxFor(m => m.VersionInv, new { @id = "version", @type = "text", @class = "form-control", @required = true, @step = ".01" })
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar o modificar</button>
+                }
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Listado de dispositivos</h6>
+                <div class="table-responsive">
+                    <table id="inventoryTable" class="table table-hover text-center" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Tipo de equipo</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Serie</th>
+                                <th>Nombre</th>
+                                <th>Version</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="~/WebStyles/js/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/WebStyles/js/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/WebStyles/js/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/WebStyles/js/datatables/jszip.min.js"></script>
+    <script src="~/WebStyles/js/datatables/pdfmake.min.js"></script>
+    <script src="~/WebStyles/js/datatables/vfs_fonts.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.html5.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.print.min.js"></script>
+    <script src="~/WebStyles/js/datatables/buttons.colVis.min.js"></script>
+    <script src="~/WebStyles/js/Inventario/list.js"></script>
+
+    @if (TempData["ErrorMesagge"] != null)
+    {
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error..',
+            html: '@TempData["ErrorMesagge"].ToString()'
+        })
+        </script>
+    }
+
+    @if (TempData["SuccessMesagge"] != null)
+    {
+        <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso ejecutado con éxito',
+            html: '@TempData["SuccessMesagge"].ToString()'
+        })
+        </script>
+    }
